@@ -31,20 +31,13 @@ int main() {
     unsigned char  src_mac[6] = { 0x33, 0x33, 0x33, 0x33, 0x33, 0x33 };
     int minIFG = 12;                // Number of IFGs at packet end
 
-    long long int lineRate = 10;                          // in Gbps
+    long long int lineRate = 10;                // in Gbps
     long long int captureSize = 10*1e9;         // Capture size in PicoSeconds (10 ms)
     int BurstSize = 3;                          // Packets per Burst
     long long int BurstPeriodicity = 100*1e6;   // Periodicity of Bursts in PicoSeconds (100 us)
 
-    // Timer
-    // for (int time = 0; time < captureSize*1e3; time++) { // Timer moves from zero to end in MicroSeconds
-    //     if ((time % BurstPeriodicity) == 0) {
-    //         for (int i = 0; i < 1; i++) generatePacket(packet_size, dest_mac, src_mac);
-    //     }
-    // }
-
     // Time Simulation
-    long long int pktTime = (packet_size + minIFG)*1e12 / lineRate*1e9; // Packet Time in PicoSeconds
+    long long int pktTime = (packet_size + minIFG)*1e3 / lineRate; // Packet Time in PicoSeconds
     long long int time = 0; // time in PicoSeconds
     while (time < captureSize) {
         // Burst Time Reached
@@ -58,8 +51,7 @@ int main() {
                     /* code to print IFGs */
             }
         }
-        else time = captureSize;
+        else time++;
     }
-
     return 0;
 }
