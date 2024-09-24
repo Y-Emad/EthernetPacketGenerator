@@ -1,13 +1,22 @@
 #ifndef ETHERNETPACKET_H
 #define ETHERNETPACKET_H
 
+#include <iostream>
 #include <vector>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <cstring>
+#include <string>
+#include <stdint.h>
+
+using namespace std;
 
 // Define Ethernet frame sizes
 #define ETH_HDRLEN 22       // Ethernet header length (including Preamble, SFD, and Length)
 #define CRC_LEN 4           // Cyclic Redundancy Check (4 bytes)
-#define IFG_LEN 12          // Interframe Gap
-#define IFG_BYTE 0x07       // Interframe Gap Byte
+#define IFG 0x07            // IFG byte shape
 
 // Structure for Ethernet header
 struct EthHeader {
@@ -32,8 +41,9 @@ public:
     void setSourceMAC(const unsigned char src_mac[6]);
     void setLength();
     void setPayload(const unsigned char* payload_data);
-    void applyCRC(const unsigned char crc[CRC_LEN]);
+    void applyCRC();
     void dumpToFile(const char* filename);
+    void genIFG(int minIFG, const char* filename);
 
 private:
     int padding_size;
@@ -43,5 +53,10 @@ private:
     unsigned char* payload;
     unsigned char* crc;
 };
+
+// Additional Functions
+unsigned char* StrToArr(const std::string& hexString);
+uint32_t crc32(uint32_t crc, const void *buf, size_t len);
+void generatePacket(int packet_size, unsigned char* dest_mac, unsigned char* src_mac, int minIFG);
 
 #endif
