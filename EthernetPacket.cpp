@@ -88,7 +88,7 @@ void EthernetPacket::dumpToFile(const char* filename) {
 }
 
 // IFG Generator
-void EthernetPacket::genIFG(int minIFG, const char* filename) {
+void genIFG(int minIFG, const char* filename) {
     int remainder = minIFG % 4;
     if (remainder) minIFG = minIFG + 4 - remainder;
     ofstream outfile(filename, ios::app | ios::binary);
@@ -100,9 +100,8 @@ void EthernetPacket::genIFG(int minIFG, const char* filename) {
             outfile << " ";     // Space after every Byte
     }
     outfile.close();
-    cout << "IFG Generated" << endl;
+    // cout << "IFG Generated" << endl;
 }
-
 
 // Additional Functions
 unsigned char* StrToArr(const string& hexString) {
@@ -129,7 +128,7 @@ uint32_t crc32(uint32_t crc, const void *buf, size_t len) {
     return crc;
 }
 
-void generatePacket(int packet_size, unsigned char* dest_mac, unsigned char* src_mac, int minIFG) {
+void generatePacket(int packet_size, unsigned char* dest_mac, unsigned char* src_mac) {
     EthernetPacket packet(packet_size);
 
     packet.setDestinationMAC(dest_mac);
@@ -140,6 +139,4 @@ void generatePacket(int packet_size, unsigned char* dest_mac, unsigned char* src
     packet.setPayload(payload);
 
     packet.dumpToFile("ethernet_packet.bin");
-
-    packet.genIFG(minIFG, "ethernet_packet.bin");
 }

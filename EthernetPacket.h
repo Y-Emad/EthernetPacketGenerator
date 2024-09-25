@@ -43,7 +43,6 @@ public:
     void setPayload(const unsigned char* payload_data);
     void applyCRC();
     void dumpToFile(const char* filename);
-    void genIFG(int minIFG, const char* filename);
 
 private:
     int padding_size;
@@ -55,8 +54,9 @@ private:
 };
 
 // Additional Functions
+void genIFG(int minIFG, const char* filename);
 unsigned char* StrToArr(const std::string& hexString);
 uint32_t crc32(uint32_t crc, const void *buf, size_t len);
-void generatePacket(int packet_size, unsigned char* dest_mac, unsigned char* src_mac, int minIFG);
+void generatePacket(int packet_size, unsigned char* dest_mac, unsigned char* src_mac);
 
 #endif
