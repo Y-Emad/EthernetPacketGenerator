@@ -5,6 +5,8 @@ SHELL := cmd.exe
 CXX = g++
 # Define the flags for compilation
 CXXFLAGS = -Wall
+# Define the linker flags
+LDFLAGS = -static
 
 # Define the output binary names
 GENERATOR = PacketGenerator
@@ -19,11 +21,11 @@ all: $(GENERATOR) $(PARSER)
 
 # Rule for PacketGenerator
 $(GENERATOR): $(GENERATOR_SRC)
-	$(CXX) $(CXXFLAGS) -o $(GENERATOR) $(GENERATOR_SRC)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(GENERATOR) $(GENERATOR_SRC)
 
 # Rule for PacketParser
 $(PARSER): $(PARSER_SRC)
-	$(CXX) $(CXXFLAGS) -o $(PARSER) $(PARSER_SRC)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(PARSER) $(PARSER_SRC)
 
 # Rule to run the PacketGenerator and PacketParser
 run: all
